@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Royale Spin Casino</title>
+<style>
+:root{--bg:#0e0b16;--panel:#181326;--panel2:#221b36;--text:#f4f0ff;--muted:#a79fc0;--gold:#f5c451;--gold2:#e59a1c;--green:#2fd48a;--red:#ff5d6c;--line:#2d2547;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:dark}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f6f3fc;--panel:#fff;--panel2:#efe9fb;--text:#1b1530;--muted:#675f82;--line:#ddd3f0;color-scheme:light}}
+:root[data-theme="light"]{--bg:#f6f3fc;--panel:#fff;--panel2:#efe9fb;--text:#1b1530;--muted:#675f82;--line:#ddd3f0;color-scheme:light}
+:root[data-theme="dark"]{--bg:#0e0b16;--panel:#181326;--panel2:#221b36;--text:#f4f0ff;--muted:#a79fc0;--line:#2d2547;color-scheme:dark}
+*{box-sizing:border-box;margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--text);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--panel);z-index:30}
+button{font:inherit;cursor:pointer;border:0;color:inherit}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--panel);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px;padding:10px 16px}
+.logo{font-weight:800;font-size:19px;letter-spacing:.5px}.logo span{color:var(--gold)}
+nav{display:flex;gap:4px;margin-left:12px}nav a{color:var(--muted);text-decoration:none;padding:6px 10px;border-radius:8px;font-size:14px}nav a:hover{color:var(--text);background:var(--panel2)}
+.sp{flex:1}
+.bal{background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-weight:700;font-size:14px;color:var(--gold);white-space:nowrap}
+.btn{padding:9px 16px;border-radius:10px;font-weight:700;font-size:14px}
+.btn.gold{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#2a1a00}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--text)}
+main{max-width:1100px;margin:0 auto;padding:16px}
+.hero{border-radius:20px;padding:32px 24px;background:radial-gradient(circle at 85% 20%,#6a3df0 0,transparent 55%),linear-gradient(135deg,#2b1760,#12091f);color:#fff;position:relative;overflow:hidden}
+.hero h1{font-size:clamp(26px,5vw,42px);line-height:1.15;max-width:520px}.hero h1 em{color:var(--gold);font-style:normal}
+.hero p{margin:12px 0 20px;color:#d6cdf0;max-width:440px}
+.hero .row{display:flex;gap:10px;flex-wrap:wrap}
+.hero .coin{position:absolute;right:24px;bottom:10px;font-size:90px;opacity:.9}
+.stats{display:flex;gap:10px;margin:14px 0;overflow-x:auto}
+.stat{flex:1 0 140px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.stat b{display:block;font-size:18px;color:var(--gold)}.stat small{color:var(--muted)}
+h2{font-size:20px;margin:22px 0 10px}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.tab{background:var(--panel);border:1px solid var(--line);padding:8px 14px;border-radius:999px;font-size:14px;white-space:nowrap;color:var(--muted)}
+.tab.on{background:var(--gold);color:#2a1a00;border-color:var(--gold);font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-top:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;text-align:left;transition:transform .15s}
+.card:hover{transform:translateY(-3px)}
+.art{height:110px;display:grid;place-items:center;font-size:48px}
+.info{padding:10px 12px}.info b{display:block}.info small{color:var(--muted)}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:999px;background:var(--panel2);color:var(--green);margin-top:4px}
+.promos{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.promo{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}
+.promo b{color:var(--gold)}.promo p{color:var(--muted);font-size:14px;margin-top:4px}
+footer{max-width:1100px;margin:30px auto 0;padding:20px 16px 40px;color:var(--muted);font-size:13px;border-top:1px solid var(--line)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;z-index:50;padding:16px}
+.modal.open{display:flex}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:20px;width:100%;max-width:400px;padding:20px;max-height:90vh;overflow:auto}
+.box h3{font-size:20px;margin-bottom:4px}.box .x{float:right;background:var(--panel2);width:32px;height:32px;border-radius:50%}
+input{width:100%;padding:12px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);color:var(--text);font:inherit;margin-top:10px}
+.field-note{color:var(--muted);font-size:12px;margin-top:8px}
+.stage{background:var(--panel2);border-radius:14px;padding:18px;text-align:center;margin:12px 0;min-height:96px;display:flex;align-items:center;justify-content:center;gap:10px;font-size:46px}
+.msg{text-align:center;font-weight:700;min-height:24px}.win{color:var(--green)}.lose{color:var(--red)}
+.chips{display:flex;gap:6px;margin:8px 0}.chips button{flex:1;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:7px}
+.pick{display:flex;gap:8px;margin:8px 0}.pick button{flex:1;padding:10px;border-radius:10px;background:var(--panel2);border:1px solid var(--line)}.pick button.on{border-color:var(--gold);color:var(--gold)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--panel2);border:1px solid var(--line);padding:10px 16px;border-radius:12px;z-index:60;display:none}
+@media(max-width:640px){nav{display:none}.hero .coin{font-size:60px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">ROYALE<span>SPIN</span></div>
+  <nav><a href="#games">Games</a><a href="#promos">Promotions</a><a href="#help">Help</a></nav>
+  <div class="sp"></div>
+  <div class="bal" id="bal">₦1,000</div>
+  <button class="btn ghost" id="authBtn">Log in</button>
+  <button class="btn gold" id="depBtn">Deposit</button>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>Spin, play and <em>win big</em> tonight</h1>
+    <p>Browse freely. Create a free account to deposit and play for real. Try every game below with demo credits first.</p>
+    <div class="row"><button class="btn gold" onclick="openAuth('signup')">Create account</button><button class="btn ghost" style="color:#fff;border-color:#ffffff55" onclick="location.hash='games'">Try demo games</button></div>
+    <div class="coin">🎰</div>
+  </section>
+
+  <div class="stats">
+    <div class="stat"><b>12,480</b><small>Players online</small></div>
+    <div class="stat"><b>₦48.2M</b><small>Paid out today</small></div>
+    <div class="stat"><b>&lt; 5 min</b><small>Average withdrawal</small></div>
+    <div class="stat"><b>24/7</b><small>Live support</small></div>
+  </div>
+
+  <h2 id="games">Games</h2>
+  <div class="tabs" id="tabs"></div>
+  <div class="grid" id="grid"></div>
+
+  <h2 id="promos">Promotions</h2>
+  <div class="promos">
+    <div class="promo"><b>Welcome bonus</b><p>Get 100% on your first deposit. New accounts only.</p></div>
+    <div class="promo"><b>Daily free spin</b><p>Log in every day for a free spin on the Lucky Wheel.</p></div>
+    <div class="promo"><b>Weekend cashback</b><p>Get 10% back on net losses every Monday.</p></div>
+  </div>
+</main>
+
+<footer id="help">
+  <p><b>Design preview.</b> This page is an interface mockup. It uses demo credits only and no real money moves.</p>
+  <p style="margin-top:6px">18+ only. Gambling can be addictive. Set limits, play responsibly, and seek help if it stops being fun.</p>
+</footer>
+
+<div class="modal" id="authM"><div class="box">
+  <button class="x" onclick="closeM('authM')">✕</button>
+  <h3 id="authT">Welcome back</h3>
+  <div class="pick" style="margin-top:12px"><button id="tLogin" class="on">Log in</button><button id="tSign">Sign up</button></div>
+  <input id="uName" placeholder="Username" style="display:none">
+  <input id="uMail" type="email" placeholder="Email">
+  <input id="uPass" type="password" placeholder="Password">
+  <label class="field-note" id="ageNote" style="display:none"><input type="checkbox" style="width:auto;margin:0 6px 0 0">I am 18 or older</label>
+  <button class="btn gold" style="width:100%;margin-top:14px" id="authGo">Log in</button>
+  <p class="field-note">Preview only. Nothing you type is sent anywhere.</p>
+</div></div>
+
+<div class="modal" id="gameM"><div class="box" id="gameBox"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const $=s=>document.querySelector(s);
+const GAMES=[
+ {id:'slots',n:'Lucky Sevens',c:'Slots',e:'🎰',g:'linear-gradient(135deg,#7a2cf0,#d4207a)',play:1},
+ {id:'dice',n:'Hi-Lo Dice',c:'Dice',e:'🎲',g:'linear-gradient(135deg,#0f8f6b,#1c4fd6)',play:1},
+ {id:'coin',n:'Coin Flip',c:'Dice',e:'🪙',g:'linear-gradient(135deg,#e59a1c,#b4400f)',play:1},
+ {id:'roul',n:'Royal Roulette',c:'Table',e:'🎡',g:'linear-gradient(135deg,#a3162a,#23102e)'},
+ {id:'bj',n:'Blackjack 21',c:'Table',e:'🃏',g:'linear-gradient(135deg,#0c6b3d,#06281a)'},
+ {id:'crash',n:'Rocket Crash',c:'Instant',e:'🚀',g:'linear-gradient(135deg,#1f3fd9,#7a1fd6)'},
+ {id:'poker',n:'Texas Poker',c:'Table',e:'♠️',g:'linear-gradient(135deg,#444,#111)'},
+ {id:'wheel',n:'Lucky Wheel',c:'Instant',e:'🎯',g:'linear-gradient(135deg,#e0551d,#a1175a)'}
+];
+let bal=1000,user=null,cat='All',mode='login';
+const fmt=n=>'₦'+Math.round(n).toLocaleString();
+function upd(){$('#bal').textContent=fmt(bal);$('#authBtn').textContent=user?user:'Log in'}
+function toast(t){const e=$('#toast');e.textContent=t;e.style.display='block';setTimeout(()=>e.style.display='none',2200)}
+function closeM(id){$('#'+id).classList.remove('open')}
+function openM(id){$('#'+id).classList.add('open')}
+
+function tabs(){const cs=['All',...new Set(GAMES.map(g=>g.c))];
+ $('#tabs').innerHTML=cs.map(c=>`<button class="tab ${c===cat?'on':''}" data-c="${c}">${c}</button>`).join('');
+ $('#tabs').onclick=e=>{if(e.target.dataset.c){cat=e.target.dataset.c;tabs();grid()}}}
+function grid(){$('#grid').innerHTML=GAMES.filter(g=>cat==='All'||g.c===cat).map(g=>
+ `<button class="card" data-id="${g.id}"><div class="art" style="background:${g.g}">${g.e}</div><div class="info"><b>${g.n}</b><small>${g.c}</small><br><span class="tag">${g.play?'Play demo':'Coming soon'}</span></div></button>`).join('');
+ $('#grid').onclick=e=>{const c=e.target.closest('.card');if(c)openGame(c.dataset.id)}}
+
+function openAuth(m){setMode(m);openM('authM')}
+function setMode(m){mode=m;const s=m==='signup';
+ $('#authT').textContent=s?'Create your account':'Welcome back';
+ $('#uName').style.display=s?'block':'none';$('#ageNote').style.display=s?'block':'none';
+ $('#authGo').textContent=s?'Create account':'Log in';
+ $('#tLogin').classList.toggle('on',!s);$('#tSign').classList.toggle('on',s)}
+$('#tLogin').onclick=()=>setMode('login');$('#tSign').onclick=()=>setMode('signup');
+$('#authBtn').onclick=()=>{if(user){user=null;upd();toast('Logged out')}else openAuth('login')};
+$('#authGo').onclick=()=>{const n=$('#uName').value.trim()||($('#uMail').value.split('@')[0])||'Player';
+ user=n;closeM('authM');upd();toast('Welcome, '+n)};
+$('#depBtn').onclick=()=>{if(!user)return openAuth('signup');bal+=500;upd();toast('Added ₦500 demo credits')};
+document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open')}));
+
+let stake=100,pickV=null;
+function openGame(id){const g=GAMES.find(x=>x.id===id);
+ if(!g.play){return toast(g.n+' is coming soon')}
+ pickV=null;
+ const picks={dice:['Under 50','Over 50'],coin:['Heads','Tails']}[id];
+ $('#gameBox').innerHTML=`<button class="x" onclick="closeM('gameM')">✕</button><h3>${g.n}</h3><small style="color:var(--muted)">Demo credits only</small>
+ <div class="stage" id="stage">${id==='slots'?'🍒🍒🍒':g.e}</div><div class="msg" id="msg"></div>
+ ${picks?`<div class="pick">${picks.map(p=>`<button data-p="${p}">${p}</button>`).join('')}</div>`:''}
+ <label class="field-note">Stake</label><input id="stk" type="number" min="10" value="${stake}">
+ <div class="chips"><button data-s="10">10</button><button data-s="50">50</button><button data-s="100">100</button><button data-s="max">Max</button></div>
+ <button class="btn gold" style="width:100%" id="go">${id==='slots'?'Spin':id==='dice'?'Roll':'Flip'}</button>
+ <p class="field-note" id="gbal">Balance: ${fmt(bal)}</p>`;
+ openM('gameM');
+ $('#gameBox').querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{pickV=b.dataset.p;$('#gameBox').querySelectorAll('[data-p]').forEach(x=>x.classList.toggle('on',x===b))});
+ $('#gameBox').querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{$('#stk').value=b.dataset.s==='max'?Math.floor(bal):b.dataset.s});
+ $('#go').onclick=()=>play(id)}
+
+function play(id){const s=Math.floor(+$('#stk').value);const msg=$('#msg'),st=$('#stage');
+ if(!s||s<10)return msg.className='msg lose',msg.textContent='Minimum stake is ₦10';
+ if(s>bal)return msg.className='msg lose',msg.textContent='Not enough balance. Tap Deposit.';
+ if(['dice','coin'].includes(id)&&!pickV)return msg.className='msg lose',msg.textContent='Pick a side first';
+ stake=s;bal-=s;let win=0,txt='';
+ if(id==='slots'){const S=['🍒','🍋','🔔','⭐','7️⃣','💎'];const r=[0,1,2].map(()=>S[Math.floor(Math.random()*6)]);
+  st.textContent=r.join('');
+  if(r[0]===r[1]&&r[1]===r[2])win=s*(r[0]==='7️⃣'?20:10);else if(r[0]===r[1]||r[1]===r[2]||r[0]===r[2])win=s*1.5}
+ if(id==='dice'){const n=Math.ceil(Math.random()*100);st.textContent=n;
+  if((pickV==='Over 50'&&n>50)||(pickV==='Under 50'&&n<=50))win=s*1.95}
+ if(id==='coin'){const h=Math.random()<.5;st.textContent=h?'🟡 Heads':'⚪ Tails';
+  if((pickV==='Heads')===h)win=s*1.95}
+ bal+=win;upd();$('#gbal').textContent='Balance: '+fmt(bal);
+ msg.className='msg '+(win?'win':'lose');msg.textContent=win?'You won '+fmt(win)+'!':'No win this time'}
+
+tabs();grid();upd();
+</script>
+</body>
+</html>
